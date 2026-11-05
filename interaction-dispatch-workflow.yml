@@ -1,19 +1,20 @@
 name: Interaction Dispatch gitHub
-on: {
-  workflow_dispatch: {
-    inputs: {
-      title: {
-        description: "Custom title",
-        type: string,
-        default: "Testing text title",
-        required: false
-      }  
-    }  
+on:
+  {
+    workflow_dispatch: { secrets: { PASSWORD: { description: 'Password field', required: true } } },
   }
-}
 
 jobs:
-  call-workflow:
-    uses: ./.github/workflows/interaction-workflow.yml
-    with:
-      title: ${{inputs.title}}
+  console-log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print password
+        run: echo '${{secrets.PASSWORD}}'
+      - name: Print gitRepo
+        run: echo '${{toJson(github)}}'
+
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: ls -a

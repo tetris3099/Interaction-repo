@@ -1,0 +1,19 @@
+name: Interaction Dispatch gitHub
+on: {
+  workflow_dispatch: {
+    inputs: {
+      title: {
+        description: "Custom title",
+        type: string,
+        default: "Testing text title",
+        required: false
+      }  
+    }  
+  }
+}
+
+jobs:
+  call-workflow:
+    uses: ./.github/workflows/interaction-workflow.yml
+    with:
+      title: ${{inputs.title}}
